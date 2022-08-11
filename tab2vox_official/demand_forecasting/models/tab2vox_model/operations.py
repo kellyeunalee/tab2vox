@@ -46,7 +46,6 @@ def compute_pad(x):
     pad_dim2 = 0 if x.shape[2] % 2 == 0 else 1
     pad_dim3 = 0 if x.shape[3] % 2 == 0 else 1
     pad_dim4 = 0 if x.shape[4] % 2 == 0 else 1
-    
     pad = (0, pad_dim4, 0, pad_dim3, 0, pad_dim2) 
     return pad
     
@@ -57,26 +56,20 @@ class FactorizedReduce(nn.Module):
         self.conv1 = nn.Conv3d(C_in, C_out//2, kernel_size=1, stride=2, bias=False)
         self.conv2 = nn.Conv3d(C_in, C_out//2, kernel_size=1, stride=2, bias=False)
         self.bn = nn.BatchNorm3d(C_out, affine=affine) 
-
     def forward(self, x):
         x = self.relu(x)
-        
         x1 = self.conv1(x)
-        
         x_pad = F.pad(x, compute_pad(x))
         x2 = self.conv2(x_pad[:,:,1:,1:,1:]) 
-        
         x = torch.cat([x1, x2], dim=1)   
         x = self.bn(x)
         return x
 
 
 class Zero(nn.Module):  
-
     def __init__(self, stride):
         super(Zero, self).__init__()
         self.stride = stride
-
     def forward(self, x):
         if self.stride == 2:
             x = x[:,:,::self.stride, ::self.stride, ::self.stride]
@@ -102,7 +95,6 @@ class ReLUConvBN(nn.Module):
             nn.Conv3d(in_C, out_C, kernel_size=kernel_size, stride=stride, padding=padding, bias=False),
             nn.BatchNorm3d(out_C, affine=affine)
         )
-    
     def forward(self, x):
         return self.ops(x)
     
@@ -119,7 +111,6 @@ class SepConv(nn.Module):
             nn.Conv3d(in_C, out_C, kernel_size=1, bias=False),
             nn.BatchNorm3d(out_C, affine=affine)
         )
-    
     def forward(self, x):
         return self.ops(x)
     
@@ -133,7 +124,6 @@ class DilConv(nn.Module):
             nn.Conv3d(in_C, out_C, kernel_size=1, bias=False),
             nn.BatchNorm3d(out_C, affine=affine)
         )
-    
     def forward(self, x):
         return self.ops(x)
 
