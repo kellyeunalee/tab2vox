@@ -33,7 +33,6 @@ def split_xy_from_data(file_path: str,
 
         
 class Voxel:
-    
     def __init__(self, key_features, df_train, df_valid, df_test): 
         
         self.all_x = pd.concat([df_train, df_valid, df_test], axis=0) 
@@ -53,7 +52,6 @@ class Voxel:
         self.key_features = key_features                
         
     def reshape_to_4d(self, items):   
-
         unique_keys = pd.DataFrame(itertools.product(items, 
                                                      self.bases, 
                                                      self.equipments, 
@@ -73,8 +71,7 @@ class Voxel:
                                                -1)                                      
         return tensor_4d_block
     
-    def make_4d_tensor(self):
-        
+    def make_4d_tensor(self):    
         tensor_4d_train_x = self.reshape_to_4d(self.train_items)
         tensor_4d_valid_x = self.reshape_to_4d(self.valid_items)
         tensor_4d_test_x = self.reshape_to_4d(self.test_items)
@@ -89,7 +86,6 @@ def get_loaders(config):
 
  
 def MND_get_loaders(config):
-
     dataset_train = 'data/A01_DATA_MND_SET1_TRAIN.csv'
     dataset_test = 'data/A01_DATA_MND_SET1_TEST.csv'
 
