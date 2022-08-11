@@ -5,7 +5,6 @@ import torch
 from torch.utils.data import Dataset
 
 class MND_Dataset(Dataset):
-    
     def __init__(self,
                  data: pd.DataFrame,
                  labels: pd.DataFrame,
