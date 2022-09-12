@@ -1,5 +1,5 @@
 
-Based on the parameter sensitivity analysis results as below, the optimal parameters were applied to the case study.
+Based on the parameter sensitivity analysis results as below, the optimal parameters were applied to the case study. However, in the case of max epoch, 10 epoch was applied considering the computational cost that takes about 4 hours per 10 epochs.
 
 Min-max accuracy
 1) Optimizer (w)	
